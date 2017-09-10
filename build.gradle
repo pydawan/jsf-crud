@@ -1,0 +1,33 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+version = 'v1.0.0'
+group = 'br.org.jsf.crud'
+
+jar {
+   manifest {
+      attributes (
+         'Implementation-Title': 'JSF CRUD - JavaServer Faces CRUD (Create, Read, Update and Delete) Library.',
+         'Implementation-Version': version
+      )
+   }
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+   compile 'org.slf4j:slf4j-api:1.7.21'
+   compile 'javax.servlet:javax.servlet-api:3.1.0'
+   compile 'com.sun.faces:jsf-api:2.2.14'
+   compile 'com.sun.faces:jsf-impl:2.2.14'
+   compile 'org.primefaces:primefaces:6.1'
+   compile files('./lib/verify-v1.0.0.jar')
+   compile files('./lib/jext-v1.0.0.jar')
+   compile files('./lib/jsf-util-v1.0.0.jar')
+   compile files('./lib/jsf-search-v1.0.0.jar')
+   compile files('./lib/jedi-orm-v1.0.0.jar')
+   testCompile 'junit:junit:4.12'
+}
