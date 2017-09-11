@@ -13,6 +13,10 @@ jar {
    }
 }
 
+eclipse.project {
+   natures 'org.springsource.ide.eclipse.gradle.core.nature'
+}
+
 repositories {
     mavenLocal()
     mavenCentral()
