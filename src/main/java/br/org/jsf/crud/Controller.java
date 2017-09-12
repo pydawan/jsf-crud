@@ -69,7 +69,7 @@ import jedi.db.models.QuerySet;
  */
 public abstract class Controller<T extends Model> {
    
-   private static final List<? extends Model> listaVazia = new ArrayList<>(0);
+   private static final List<? extends Model> LISTA_VAZIA = new ArrayList<>(0);
    private static final String GLOBAL_FILTER_ID = ":fo-%s:globalFilter";
    private static final String TABELA_REGISTROS_ID = ":fo-%s:registros";
    private static final String FORM_MESSAGES = ":fo-%s:messages";
@@ -158,7 +158,7 @@ public abstract class Controller<T extends Model> {
                }
             }
             if (lista == null) {
-               lista = (QuerySet<T>) listaVazia;
+               lista = (QuerySet<T>) LISTA_VAZIA;
             }
             return lista;
          }
@@ -582,7 +582,7 @@ public abstract class Controller<T extends Model> {
          Manager objects = new Manager(classeRegistro);
          return objects.reversePage(pageStart(0), pageSize(5), pageFilters(filtroPesquisaEstatico.toString()));
       }
-      return (List<T>) listaVazia;
+      return (List<T>) LISTA_VAZIA;
    }
    
    public void onLoad(ComponentSystemEvent event) {
