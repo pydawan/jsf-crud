@@ -13,18 +13,18 @@ import java.util.regex.Pattern;
 public class ExceptionTranslator {
    
    public static String translate(Exception e) {
-      String mensagem = e.getCause().getMessage();
+      String message = e.getCause().getMessage();
       Pattern pattern = Pattern.compile("^Duplicate entry \'(.*)\' for key \'(\\w+)\'$");
-      Matcher matcher = pattern.matcher(mensagem);
+      Matcher matcher = pattern.matcher(message);
       if (matcher.matches()) {
-         String campo = matcher.group(2);
-         String valor = matcher.group(1);
-         campo = campo.replace("_", " ");
-         campo = campo.toUpperCase();
-         mensagem = String.format("Já existe um registro cadastrado com %s igual a %s!", campo, valor);
-         mensagem = mensagem.replace("numero", "número");
+         String field = matcher.group(2);
+         String value = matcher.group(1);
+         field = field.replace("_", " ");
+         field = field.toUpperCase();
+         message = String.format("Já existe um registro cadastrado com %s igual a %s!", field, value);
+         message = message.replace("numero", "número");
       }
-      return mensagem;
+      return message;
    }
    
 }
