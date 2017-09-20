@@ -90,7 +90,7 @@ public enum SituacaoCadastro {
       return isInativo(situacaoCadastro);
    }
    
-   public static SituacaoCadastro situacao(String situacao) {
+   public static SituacaoCadastro situacaoCadastro(String situacao) {
       SituacaoCadastro situacaoCadastro = null;
       if (isEmptyOrNull(situacao)) {
          throw new IllegalArgumentException("ATENÇÃO: A situação não pode ser nula ou vazia!");
@@ -103,6 +103,10 @@ public enum SituacaoCadastro {
          }
       }
       return situacaoCadastro;
+   }
+   
+   public static SituacaoCadastro situacao(String situacao) {
+      return situacaoCadastro(situacao);
    }
    
    @Override

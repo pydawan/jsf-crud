@@ -1,5 +1,6 @@
 package br.org.jsf.crud;
 
+import static br.org.verify.Verify.isEmptyOrNull;
 import static br.org.verify.Verify.isNotNull;
 
 /**
@@ -86,6 +87,25 @@ public enum RegistrationStatus {
    
    public static boolean inactive(String registrationStatus) {
       return isInactive(registrationStatus);
+   }
+   
+   public static RegistrationStatus registrationStatus(String status) {
+      RegistrationStatus RegistrationStatus = null;
+      if (isEmptyOrNull(status)) {
+         throw new IllegalArgumentException("ATENÇÃO: A situação não pode ser nula ou vazia!");
+      } else {
+         if (isActive(status)) {
+            RegistrationStatus = ACTIVE;
+         }
+         if (isInactive(status)) {
+            RegistrationStatus = INACTIVE;
+         }
+      }
+      return RegistrationStatus;
+   }
+   
+   public static RegistrationStatus status(String status) {
+      return registrationStatus(status);
    }
    
    @Override
