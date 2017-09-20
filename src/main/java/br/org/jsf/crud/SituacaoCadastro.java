@@ -1,5 +1,6 @@
 package br.org.jsf.crud;
 
+import static br.org.verify.Verify.isEmptyOrNull;
 import static br.org.verify.Verify.isNotNull;
 
 /**
@@ -10,7 +11,8 @@ import static br.org.verify.Verify.isNotNull;
  * 
  * @author thiago-amm
  * @version v1.0.0 10/09/2017
- * @version v1.0.0 17/09/2017
+ * @version v1.0.1 17/09/2017
+ * @version v1.0.2 20/09/2017
  * @since v1.0.0
  */
 public enum SituacaoCadastro {
@@ -86,6 +88,21 @@ public enum SituacaoCadastro {
    
    public static boolean inativo(String situacaoCadastro) {
       return isInativo(situacaoCadastro);
+   }
+   
+   public static SituacaoCadastro situacao(String situacao) {
+      SituacaoCadastro situacaoCadastro = null;
+      if (isEmptyOrNull(situacao)) {
+         throw new IllegalArgumentException("ATENÇÃO: A situação não pode ser nula ou vazia!");
+      } else {
+         if (isAtivo(situacao)) {
+            situacaoCadastro = ATIVO;
+         }
+         if (isInativo(situacao)) {
+            situacaoCadastro = INATIVO;
+         }
+      }
+      return situacaoCadastro;
    }
    
    @Override
