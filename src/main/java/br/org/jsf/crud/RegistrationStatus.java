@@ -12,6 +12,7 @@ import static br.org.verify.Verify.isNotNull;
  * @author thiago-amm
  * @version v1.0.0 10/09/2017
  * @version v1.0.1 17/09/2017
+ * @version v1.0.2 20/09/2017
  * @since v1.0.0
  */
 public enum RegistrationStatus {
