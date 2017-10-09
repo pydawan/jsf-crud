@@ -103,6 +103,7 @@ public abstract class Controller<T extends Model> {
    protected String valorPesquisa;
    protected String mensagemConfirmacaoRemocaoRegistro;
    protected String tituloDialog;
+   protected String exceptionMessage = "";
    
    @SuppressWarnings("unchecked")
    public Controller() {
@@ -298,7 +299,7 @@ public abstract class Controller<T extends Model> {
    }
    
    @SuppressWarnings("unchecked")
-   public void criarNovo() {
+   public void criarNovoRegistro() {
       try {
          if (classeRegistro != null) {
             registro = (T) classeRegistro.newInstance();
@@ -310,12 +311,12 @@ public abstract class Controller<T extends Model> {
    
    public void adicionar(ActionEvent event) {
       acao = AcaoFormulario.ADICIONAR.getValor();
-      criarNovo();
+      criarNovoRegistro();
    }
    
    public void novo(ActionEvent event) {
       acao = AcaoFormulario.NOVO.getValor();
-      criarNovo();
+      criarNovoRegistro();
    }
    
    public void editar(T registro) {
@@ -342,20 +343,37 @@ public abstract class Controller<T extends Model> {
          JsfUtil.error("FALHA: ", ExceptionTranslator.translate(e));
          JediEngine.resetAutoIncrement(registro);
       }
-      criarNovo();
+      criarNovoRegistro();
       onPostSave();
    }
    
    public void limpar(ActionEvent event) {
-      criarNovo();
+      this.acao = "" + AcaoFormulario.LIMPAR;
+      criarNovoRegistro();
    }
    
    public void confirmarRemocao(T registro) {
-      acao = "" + AcaoFormulario.INATIVAR;
+      acao = "" + AcaoFormulario.REMOVER;
       setRegistro(registro);
    }
    
    public void remover(ActionEvent actionEvent) {
+      try {
+         registro.delete();
+         getTabelaRegistros().loadLazyData();
+         JsfUtil.info("SUCESSO", "Registro salvo com sucesso!");
+      } catch (Exception e) {
+         exceptionMessage = String.format("Falha ao remover o registro de id %s.", registro.id());
+         JsfUtil.error("FALHA", exceptionMessage);
+      }
+   }
+   
+   public void confirmarInativacao(T registro) {
+      acao = "" + AcaoFormulario.INATIVAR;
+      setRegistro(registro);
+   }
+   
+   public void inativar(ActionEvent actionEvent) {
       try {
          registro.getClass().getMethod("inativar").invoke(registro, (Object[]) null);
          getTabelaRegistros().loadLazyData();
