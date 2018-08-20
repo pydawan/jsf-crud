@@ -46,7 +46,7 @@ import br.org.jsf.search.OpcoesCampoPesquisa;
 import br.org.jsf.search.OpcoesCriterioPesquisa;
 import br.org.jsf.search.ParametroPesquisa;
 import br.org.jsf.search.ParametrosPesquisa;
-import br.org.jsf.util.JsfUtil;
+import br.org.jsf.util.JSF;
 import jedi.db.engine.JediEngine;
 import jedi.db.exceptions.DatabaseException;
 import jedi.db.models.Manager;
@@ -179,11 +179,11 @@ public abstract class Controller<T extends Model> {
       opcoesCriterioPesquisa.add(criterioPesquisa(NAO_TERMINA_COM));
       opcoesCriterioPesquisa.add(criterioPesquisa(NO_INTERVALO));
       opcoesCriterioPesquisa.add(criterioPesquisa(FORA_DO_INTERVALO));
-      criteriosPesquisa = JsfUtil.selectOneMenu(opcoesCriterioPesquisa);
+      criteriosPesquisa = JSF.selectOneMenu(opcoesCriterioPesquisa);
       criteriosPesquisa.setValue("");
       criteriosPesquisa.setRequired(false);
-      situacoesCadastroPesquisa = JsfUtil.selectOneMenu(SituacaoCadastro.values());
-      campoValorPesquisaSelecao = JsfUtil.selectOneMenu(VALOR_PESQUISA_SELECAO_ID + formId);
+      situacoesCadastroPesquisa = JSF.selectOneMenu(SituacaoCadastro.values());
+      campoValorPesquisaSelecao = JSF.selectOneMenu(VALOR_PESQUISA_SELECAO_ID + formId);
       parametroPesquisa = new ParametroPesquisa();
    }
    
@@ -242,7 +242,7 @@ public abstract class Controller<T extends Model> {
    public DataTable getTabelaRegistros() {
       if (isNull(tabelaRegistros)) {
          String id = String.format(TABELA_REGISTROS_ID, formId);
-         tabelaRegistros = JsfUtil.dataTable(id);
+         tabelaRegistros = JSF.dataTable(id);
       }
       return tabelaRegistros;
    }
@@ -293,8 +293,8 @@ public abstract class Controller<T extends Model> {
    }
    
    public void carregarOpcoesPesquisaSituacao() {
-      JsfUtil.clear(campoValorPesquisaSelecao);
-      JsfUtil.selectOneMenu(campoValorPesquisaSelecao, getSituacoesCadastro());
+      JSF.clear(campoValorPesquisaSelecao);
+      JSF.selectOneMenu(campoValorPesquisaSelecao, getSituacoesCadastro());
       mostrarCampoValorPesquisaSelecao();
    }
    
@@ -336,11 +336,11 @@ public abstract class Controller<T extends Model> {
       onPreSave();
       try {
          registro.save();
-         JsfUtil.info("SUCESSO:", "Registro salvo com sucesso!");
+         JSF.info("SUCESSO:", "Registro salvo com sucesso!");
          String messages = String.format(FORM_MESSAGES, formId);
-         JsfUtil.update(messages);
+         JSF.update(messages);
       } catch (DatabaseException e) {
-         JsfUtil.error("FALHA: ", ExceptionTranslator.translate(e));
+         JSF.error("FALHA: ", ExceptionTranslator.translate(e));
          JediEngine.resetAutoIncrement(registro);
       }
       criarNovoRegistro();
@@ -361,10 +361,10 @@ public abstract class Controller<T extends Model> {
       try {
          registro.delete();
          getTabelaRegistros().loadLazyData();
-         JsfUtil.info("SUCESSO", "Registro salvo com sucesso!");
+         JSF.info("SUCESSO", "Registro salvo com sucesso!");
       } catch (Exception e) {
          exceptionMessage = String.format("Falha ao remover o registro de id %s.", registro.id());
-         JsfUtil.error("FALHA", exceptionMessage);
+         JSF.error("FALHA", exceptionMessage);
       }
    }
    
@@ -377,9 +377,9 @@ public abstract class Controller<T extends Model> {
       try {
          registro.getClass().getMethod("inativar").invoke(registro, (Object[]) null);
          getTabelaRegistros().loadLazyData();
-         JsfUtil.info("SUCESSO", "Registro salvo com sucesso!");
+         JSF.info("SUCESSO", "Registro salvo com sucesso!");
       } catch (Exception e) {
-         JsfUtil.error("FALHA", "Falha na inativação/exclusão lógica do registro.");
+         JSF.error("FALHA", "Falha na inativação/exclusão lógica do registro.");
       }
    }
    
@@ -473,13 +473,13 @@ public abstract class Controller<T extends Model> {
    
    public InputText getCampoValorPesquisaTexto() {
       String id = String.format(VALOR_PESQUISA_TEXTO_ID, formId);
-      InputText inputText = JsfUtil.inputText(id);
+      InputText inputText = JSF.inputText(id);
       return inputText;
    }
    
    public Calendar getCampoValorPesquisaCalendario() {
       String id = String.format(VALOR_PESQUISA_CALENDARIO_ID, formId);
-      Calendar calendar = JsfUtil.calendar(id);
+      Calendar calendar = JSF.calendar(id);
       return calendar;
    }
    
